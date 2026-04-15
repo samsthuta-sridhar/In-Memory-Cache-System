@@ -1,0 +1,31 @@
+# Maven build output
+target/
+*.class
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+*.code-workspace
+.settings/
+.project
+.classpath
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment / secrets
+application-local.properties
+*.env
+.env
+
+# Logs
+*.log
+logs/
+
+# JavaFX
+*.jfx
+
+# Spring Boot
+spring-shell.log
