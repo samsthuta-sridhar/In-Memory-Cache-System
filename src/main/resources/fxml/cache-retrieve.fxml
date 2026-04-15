@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="20" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.imcs.presentation.CacheRetrieveController">
+    <padding><Insets top="30" right="30" bottom="30" left="30"/></padding>
+
+    <Label text="Retrieve Data from Cache" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+    <HBox spacing="10">
+        <TextField fx:id="keyField" promptText="Enter key (e.g. account:1001)" HBox.hgrow="ALWAYS"/>
+        <Button text="GET" onAction="#handleGet" style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+    </HBox>
+
+    <Label text="Result:" style="-fx-font-weight: bold;"/>
+    <TextArea fx:id="resultArea" editable="false" prefHeight="200"
+              promptText="Result will appear here..."/>
+
+    <Label fx:id="statusLabel" text="" style="-fx-font-size: 14px;"/>
+</VBox>

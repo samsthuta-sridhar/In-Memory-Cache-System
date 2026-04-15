@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.imcs.presentation.MainViewController"
+            stylesheets="@../styles/application.css">
+    <bottom>
+        <HBox styleClass="status-bar" alignment="CENTER_LEFT" spacing="10">
+            <padding><Insets top="6" right="16" bottom="6" left="16"/></padding>
+            <Label fx:id="statusBar" text="● Connected | Loading..."
+                   styleClass="status-text" HBox.hgrow="ALWAYS"/>
+            <Button text="Logout" onAction="#handleLogout"
+                    style="-fx-background-color: #F44336; -fx-text-fill: white;
+                           -fx-font-size: 11px; -fx-padding: 4 10 4 10;
+                           -fx-background-radius: 4; -fx-cursor: hand;"/>
+        </HBox>
+    </bottom>
+    <center>
+        <TabPane tabClosingPolicy="UNAVAILABLE" styleClass="main-tabs">
+            <tabs>
+                <Tab text="⬆Retrieve/Hit">
+                    <content><fx:include source="cache-retrieve.fxml"/></content>
+                </Tab>
+                <Tab text="⬇Cache Miss/DB Fallback">
+                    <content><fx:include source="cache-miss.fxml"/></content>
+                </Tab>
+                <Tab text="＋Store Data">
+                    <content><fx:include source="cache-store.fxml"/></content>
+                </Tab>
+                <Tab text="⏱TTL/Maintenance">
+                    <content><fx:include source="cache-maintenance.fxml"/></content>
+                </Tab>
+                <Tab text="📊Stats/Eviction Control">
+                    <content><fx:include source="cache-stats.fxml"/></content>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </center>
+</BorderPane>

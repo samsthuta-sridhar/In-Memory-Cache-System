@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="14" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.imcs.presentation.CacheMaintenanceController">
+    <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+
+    <Label text="TTL Expiry/Cache Maintenance"
+           style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+    <!-- All Accounts Table -->
+    <Label text="All Accounts in Database (click to select)"
+           style="-fx-font-weight: bold; -fx-text-fill: #555;"/>
+    <TableView fx:id="accountsTable" prefHeight="160">
+        <columns>
+            <TableColumn fx:id="accountKeyCol"   text="Account Key"    prefWidth="200"/>
+            <TableColumn fx:id="accountValueCol" text="Balance" prefWidth="260"/>
+            <TableColumn fx:id="accountCacheCol" text="Cache Status"   prefWidth="120"/>
+        </columns>
+        <placeholder><Label text="No accounts stored yet"/></placeholder>
+    </TableView>
+
+    <!-- Update / Delete -->
+    <Label text="Update or Delete Entry"
+           style="-fx-font-weight: bold; -fx-text-fill: #555;"/>
+    <HBox spacing="10">
+        <TextField fx:id="keyField"   promptText="Key (click row above or type)"
+                   HBox.hgrow="ALWAYS"/>
+        <TextField fx:id="valueField" promptText="New value (for update)"
+                   HBox.hgrow="ALWAYS"/>
+    </HBox>
+
+    <HBox spacing="10">
+        <Button text="Update" onAction="#handleUpdate"
+                style="-fx-background-color: #9C27B0; -fx-text-fill: white;
+                       -fx-font-weight: bold; -fx-background-radius: 6; -fx-cursor: hand;"/>
+        <Button text="Delete" onAction="#handleDelete"
+                style="-fx-background-color: #F44336; -fx-text-fill: white;
+                       -fx-font-weight: bold; -fx-background-radius: 6; -fx-cursor: hand;"/>
+        <Button text="↻ Refresh" onAction="#handleRefreshLog"
+                style="-fx-background-color: #607D8B; -fx-text-fill: white;
+                       -fx-font-weight: bold; -fx-background-radius: 6; -fx-cursor: hand;"/>
+    </HBox>
+
+    <Label fx:id="statusLabel" text=""/>
+
+    <!-- Audit Log -->
+    <Label text="Audit Log (last 25 operations)"
+           style="-fx-font-weight: bold; -fx-text-fill: #555;"/>
+    <TextArea fx:id="logArea" editable="false" VBox.vgrow="ALWAYS"
+              style="-fx-font-family: monospace; -fx-font-size: 11px;"
+              prefHeight="180"/>
+</VBox>
