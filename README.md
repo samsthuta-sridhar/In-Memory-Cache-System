@@ -46,20 +46,21 @@ Every balance check, account lookup, or transaction query typically hits the dat
 User → JavaFX UI → CacheController → CacheService → CacheManager (RAM) ↘ CacheDataRepository (PostgreSQL)
 '''
 
-com.imcs/
-├── cache/          — CacheManager, CacheEntry, CacheEntryFactory
-├── controller/     — CacheController
-├── eviction/       — EvictionPolicy, LRUEvictionPolicy, LFUEvictionPolicy
-├── service/        — CacheService, TTLManager, AuditLogService, CacheStatsService
-├── repository/     — CacheDataRepository, UserRepository, AuditLogRepository
-├── entity/         — CacheDataEntity, UserEntity, AuditLogEntity
-├── security/       — AuthService, EncryptionService, SessionManager, RateLimiterService
-├── events/         — CacheExpiryEvent, CacheExpiryListener
-├── presentation/   — JavaFX controllers
-├── response/       — CacheResponseView
-└── config/         — CacheConfiguration, ApplicationConfiguration
+**Package Structure**
 
----
+| Package         | Classes                                                            |
+|-----------------|--------------------------------------------------------------------|
+| `cache/`        | CacheManager, CacheEntry, CacheEntryFactory                        |
+| `controller/`   | CacheController                                                    |
+| `eviction/`     | EvictionPolicy, LRUEvictionPolicy, LFUEvictionPolicy               |
+| `service/`      | CacheService, TTLManager, AuditLogService, CacheStatsService       |
+| `repository/`   | CacheDataRepository, UserRepository, AuditLogRepository            |
+| `entity/`       | CacheDataEntity, UserEntity, AuditLogEntity                        |
+| `security/`     | AuthService, EncryptionService, SessionManager, RateLimiterService |
+| `events/`       | CacheExpiryEvent, CacheExpiryListener                              |
+| `presentation/` | JavaFX controllers                                                 |
+| `response/`     | CacheResponseView                                                  |
+| `config/`       | CacheConfiguration, ApplicationConfiguration                       |
 
 ---
 
