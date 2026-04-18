@@ -73,33 +73,52 @@ User → JavaFX UI → CacheController → CacheService → CacheManager (RAM) �
 
 ### Database Setup
 
-Create a database called `imcs_db` in PostgreSQL, then run `src/main/resources/schema.sql` 
-in pgAdmin Query Tool.
+1. Install PostgreSQL and open pgAdmin
+2. Create a new database called `imcs_db`
+3. Open the Query Tool for `imcs_db` and run the following:
 
-### Configuration
+```sql
+CREATE TABLE IF NOT EXISTS cache_data (
+    key VARCHAR(255) PRIMARY KEY,
+    value TEXT NOT NULL
+);
 
-Edit `src/main/resources/application.properties`:
+CREATE TABLE IF NOT EXISTS users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    failed_attempts INTEGER DEFAULT 0,
+    locked BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS audit_log (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(100),
+    operation VARCHAR(50),
+    cache_key VARCHAR(255),
+    status VARCHAR(50),
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO users (username, password, failed_attempts, locked)
+VALUES ('admin', 'admin123', 0, false)
+ON CONFLICT (username) DO NOTHING;
+```
+
+4. Open `src/main/resources/application.properties` and update:
 
 ```properties
 spring.datasource.url=jdbc:postgresql://localhost:5432/imcs_db
 spring.datasource.username=postgres
-spring.datasource.password=your_password
-cache.max-capacity=10
-cache.ttl-ms=1800000
-cache.eviction-policy=LRU
+spring.datasource.password=your_postgres_password
 ```
 
-### Run
-
-```bash
-mvn clean compile -DskipTests
-mvn spring-boot:run
-```
-
-### Login
-
-Username: admin
-Password: admin123
+### Login Credentials
+| Field    | Value    |
+|----------|----------|
+| Username | admin    |
+| Password | admin123 |
 
 ---
 
@@ -115,6 +134,4 @@ Password: admin123
 
 ---
 
-## License
 
-MIT
