@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS audit_log (
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Default admin user (password: admin123)
+-- Default admin user (password: admin123, hashed with Argon2id)
 INSERT INTO users (username, password, failed_attempts, locked)
-VALUES ('admin', 'admin123', 0, false)
+VALUES ('admin', '$argon2id$v=19$m=16384,t=2,p=1$eg6edoSYbd9fdmRDG1hCsQ$j63te2IRl3fp5F50UqcDK+/yHgobKdCoEgkzH43lGvw', 0, false)
 ON CONFLICT (username) DO NOTHING;
