@@ -41,6 +41,7 @@ public class CacheStatsController implements Initializable {
     @FXML private Label policyLabel;
     @FXML private RadioButton lruRadio;
     @FXML private RadioButton lfuRadio;
+    @FXML private RadioButton fifoRadio;
 
     @FXML private TableView<Map.Entry<String, CacheEntry>> cacheTable;
     @FXML private TableColumn<Map.Entry<String, CacheEntry>, String> keyCol;
@@ -56,6 +57,7 @@ public class CacheStatsController implements Initializable {
         policyGroup = new ToggleGroup();
         lruRadio.setToggleGroup(policyGroup);
         lfuRadio.setToggleGroup(policyGroup);
+        fifoRadio.setToggleGroup(policyGroup);
         lruRadio.setSelected(true);
 
         keyCol.setCellValueFactory(d ->
@@ -93,7 +95,6 @@ public class CacheStatsController implements Initializable {
                 new SimpleDateFormat("HH:mm:ss").format(new Date(ts)));
         });
 
-        // Auto-refresh every second on JavaFX thread
         Timeline autoRefresh = new Timeline(
             new KeyFrame(Duration.seconds(1),
                 e -> Platform.runLater(this::refreshData)));
@@ -119,6 +120,15 @@ public class CacheStatsController implements Initializable {
         policyLabel.setStyle(
             "-fx-text-fill: #9C27B0; -fx-font-weight: bold;");
         lfuRadio.setSelected(true);
+    }
+
+    @FXML
+    public void selectFIFO() {
+        cacheService.setEvictionPolicy("FIFO");
+        policyLabel.setText("Active: FIFO — removes oldest inserted entry");
+        policyLabel.setStyle(
+            "-fx-text-fill: #FF5722; -fx-font-weight: bold;");
+        fifoRadio.setSelected(true);
     }
 
     @FXML public void handleRefresh() { refreshData(); }
@@ -157,12 +167,10 @@ public class CacheStatsController implements Initializable {
                 "-fx-text-fill: #4CAF50; -fx-font-weight: bold;");
         }
 
-        // Force full table rebuild so access count updates live
         cacheTable.getItems().clear();
         cacheTable.getItems().addAll(
             cacheManager.getAllEntries().entrySet());
 
-        // Force JavaFX to re-render all cells
         cacheTable.getColumns().forEach(col -> {
             col.setVisible(false);
             col.setVisible(true);

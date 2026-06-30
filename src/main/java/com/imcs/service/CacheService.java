@@ -5,6 +5,7 @@ import com.imcs.cache.CacheEntryFactory;
 import com.imcs.cache.CacheManager;
 import com.imcs.entity.CacheDataEntity;
 import com.imcs.eviction.EvictionPolicy;
+import com.imcs.eviction.FIFOEvictionPolicy;
 import com.imcs.eviction.LFUEvictionPolicy;
 import com.imcs.eviction.LRUEvictionPolicy;
 import com.imcs.repository.CacheDataRepository;
@@ -29,6 +30,7 @@ public class CacheService {
 
     @Autowired @Qualifier("lru") private EvictionPolicy lruEvictionPolicy;
     @Autowired @Qualifier("lfu") private EvictionPolicy lfuEvictionPolicy;
+    @Autowired @Qualifier("fifo") private EvictionPolicy fifoEvictionPolicy;
 
     public String getValue(String key) {
         if (!rateLimiterService.isAllowed(key)) {
@@ -114,6 +116,8 @@ public class CacheService {
     public void setEvictionPolicy(String policy) {
         if ("LFU".equalsIgnoreCase(policy)) {
             cacheManager.setEvictionPolicy(lfuEvictionPolicy);
+        } else if ("FIFO".equalsIgnoreCase(policy)) {
+            cacheManager.setEvictionPolicy(fifoEvictionPolicy);
         } else {
             cacheManager.setEvictionPolicy(lruEvictionPolicy);
         }
@@ -122,8 +126,10 @@ public class CacheService {
     }
 
     public String getCurrentPolicy() {
-        return cacheManager.getEvictionPolicy()
-            instanceof LFUEvictionPolicy ? "LFU" : "LRU";
+        EvictionPolicy active = cacheManager.getEvictionPolicy();
+        if (active instanceof LFUEvictionPolicy) return "LFU";
+        if (active instanceof FIFOEvictionPolicy) return "FIFO";
+        return "LRU";
     }
 
     // Result object carrying eviction info back to controller

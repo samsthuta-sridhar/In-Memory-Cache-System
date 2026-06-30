@@ -46,6 +46,7 @@
         <Label text="Eviction Policy:" style="-fx-font-weight: bold;"/>
         <RadioButton fx:id="lruRadio" text="LRU" onAction="#selectLRU"/>
         <RadioButton fx:id="lfuRadio" text="LFU" onAction="#selectLFU"/>
+        <RadioButton fx:id="fifoRadio" text="FIFO" onAction="#selectFIFO"/>
         <Label fx:id="policyLabel" text="Active: LRU"
                style="-fx-text-fill: #2196F3; -fx-font-weight: bold;"/>
     </HBox>

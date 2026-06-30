@@ -3,6 +3,7 @@ package com.imcs.config;
 import com.imcs.eviction.EvictionPolicy;
 import com.imcs.eviction.LRUEvictionPolicy;
 import com.imcs.eviction.LFUEvictionPolicy;
+import com.imcs.eviction.FIFOEvictionPolicy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -21,11 +22,17 @@ public class CacheConfiguration {
     @Autowired
     private LFUEvictionPolicy lfuEvictionPolicy;
 
+    @Autowired
+    private FIFOEvictionPolicy fifoEvictionPolicy;
+
     @Bean
     @Primary
     public EvictionPolicy evictionPolicy() {
         if ("LFU".equalsIgnoreCase(evictionPolicy)) {
             return lfuEvictionPolicy;
+        }
+        if ("FIFO".equalsIgnoreCase(evictionPolicy)) {
+            return fifoEvictionPolicy;
         }
         return lruEvictionPolicy;
     }

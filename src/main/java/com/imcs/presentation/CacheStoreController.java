@@ -44,7 +44,6 @@ public class CacheStoreController implements Initializable {
             statusLabel.setText("");
         });
 
-        // Auto-refresh capacity bar every second
         Timeline autoRefresh = new Timeline(
             new KeyFrame(Duration.seconds(1),
                 e -> Platform.runLater(this::updateCapacityIndicator)));
@@ -88,6 +87,8 @@ public class CacheStoreController implements Initializable {
             sb.append("Reason: ");
             if (result.evictionPolicy.equals("LRU")) {
                 sb.append("Least Recently Used (had the oldest lastAccessTime)\n\n");
+            } else if (result.evictionPolicy.equals("FIFO")) {
+                sb.append("First In First Out (was the earliest inserted entry)\n\n");
             } else {
                 sb.append("Least Frequently Used (had the lowest accessCount)\n\n");
             }
