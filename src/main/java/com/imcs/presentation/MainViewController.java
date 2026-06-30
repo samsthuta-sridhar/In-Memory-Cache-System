@@ -14,6 +14,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
@@ -23,6 +25,8 @@ import java.util.ResourceBundle;
 
 @Component
 public class MainViewController implements Initializable {
+
+    private static final Logger log = LoggerFactory.getLogger(MainViewController.class);
 
     @Autowired private AuthService authService;
     @Autowired private SessionManager sessionManager;
@@ -80,7 +84,7 @@ public class MainViewController implements Initializable {
             LoginController controller = loader.getController();
             controller.setStage(stage);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Failed to return to login screen during logout", e);
         }
     }
 }

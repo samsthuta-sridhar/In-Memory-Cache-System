@@ -11,12 +11,16 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 
 @Component
 public class LoginController {
+
+    private static final Logger log = LoggerFactory.getLogger(LoginController.class);
 
     @Autowired private AuthService authService;
     @Autowired private SessionManager sessionManager;
@@ -75,7 +79,7 @@ public class LoginController {
             stage.setTitle("In-Memory Cache System — Banking");
             stage.show();
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Failed to load main window", e);
             errorLabel.setText("Failed to load main window.");
         }
     }

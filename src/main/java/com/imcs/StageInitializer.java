@@ -5,6 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
@@ -14,6 +16,8 @@ import java.net.URL;
 
 @Component
 public class StageInitializer implements ApplicationListener<StageReadyEvent> {
+
+    private static final Logger log = LoggerFactory.getLogger(StageInitializer.class);
 
     private final ConfigurableApplicationContext applicationContext;
 
@@ -39,7 +43,7 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
             controller.setStage(stage);
 
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("Failed to load login screen", e);
         }
     }
 }
