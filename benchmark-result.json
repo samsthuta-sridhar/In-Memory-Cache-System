@@ -1,0 +1,8 @@
+{
+  "rawCacheLookupAvgNs": 154,
+  "fullServicePathAvgNs": 704555,
+  "dbQueryAvgNs": 399029,
+  "rawCacheSpeedupVsDb": 2591.1,
+  "auditSecurityOverheadFactor": 4575.0,
+  "timestamp": "2026-06-30T11:00:30.776856700Z"
+}
